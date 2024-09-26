@@ -4,7 +4,7 @@
   "info": {
     "title": "PyDolarVenezuela API",
     "description": "Esta es la documentación de la API de pyDolarVenezuela donde sabrás cómo utilizar cada endpoint.",
-    "version": "1.9.4",
+    "version": "1.9.5",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -27,7 +27,7 @@
           "Dólar"
         ],
         "summary": "Obtener monitores",
-        "description": "Obtiene información de un monitor específico o de todos los monitores en una página.",
+        "description": "Si se especifica un monitor, se obtendrá la información de ese monitor. Si no se especifica, se obtendrá la información de todos los monitores. \n\n**Las páginas disponibles son**: \n - Al Cambio (`alcambio`)  \n - Banco Central de Venezuela (`bcv`) \n - Criptodolar (`criptodolar`) \n - Dolartoday (`dolartoday`) \n - EnParaleloVzla (`enparalelovzla`) \n - Italcambio (`italcambio`)",
         "operationId": "getMonitors",
         "parameters": [
           {
@@ -58,8 +58,7 @@
             "description": "El monitor específico del que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "default": null,
-              "example": "monitor1"
+              "default": null
             }
           }
         ],
@@ -77,7 +76,7 @@
                     "time": "12:00:00"
                   },
                   "monitors": {
-                    "monitor1": {
+                    "monitor": {
                       "change": 1.23,
                       "color": "green",
                       "image": "https://example.com/image.png",
@@ -85,7 +84,7 @@
                       "percent": 0.5,
                       "price": 100.0,
                       "price_old": 99.0,
-                      "symbol": "$",
+                      "symbol": "+",
                       "title": "Monitor 1"
                     }
                   }
@@ -148,7 +147,7 @@
             "description": "El monitor específico del que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "example": "monitor1"
+              "example": "bcv"
             }
           }
         ],
@@ -196,7 +195,7 @@
             "description": "La página de la que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "example": "criptodolar"
+              "example": "bcv"
             }
           },
           {
@@ -206,7 +205,7 @@
             "description": "El monitor específico del que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "example": "monitor1"
+              "example": "usd"
             }
           },
           {
@@ -290,7 +289,7 @@
             "description": "La página de la que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "example": "criptodolar"
+              "example": "enparalelovzla"
             }
           },
           {
@@ -300,7 +299,7 @@
             "description": "El monitor específico del que se quiere obtener la información.",
             "schema": {
               "type": "string",
-              "example": "monitor1"
+              "example": "enparalelovzla"
             }
           },
           {
@@ -376,9 +375,41 @@
           },
           "monitors": {
             "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/Monitor"
-            }
+            "properties": {
+              "change": {
+                "type": "number",
+                "format": "float"
+              },
+              "color": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "last_update": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "percent": {
+                "type": "number",
+                "format": "float"
+              },
+              "price": {
+                "type": "number",
+                "format": "float"
+              },
+              "price_old": {
+                "type": "number",
+                "format": "float"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+          }
           }
         },
         "example": {
@@ -503,7 +534,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "changes": {
+          "daily": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MonitorData"
@@ -512,7 +543,7 @@
         },
         "example": {
           "datetime": "2024-01-01T12:00:00Z",
-          "changes": [
+          "daily": [
             {
               "price": 100.0,
               "last_update": "2024-01-01T12:00:00Z"
