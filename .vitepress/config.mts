@@ -8,10 +8,22 @@ const sidebar = useSidebar()
 
 export default defineConfig({
   title: "PyDolarVenezuela API Docs",
-  description: "A VitePress Site",
+  description: "Documentación de la API de pyDolarVenezuela",
   themeConfig: {
     sidebar: [
       ...sidebar.generateSidebarGroups(),
+    ],
+    nav: [
+      {
+        text: 'API',
+        link: 'https://pydolarve.org/'
+      },
+    ],
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/fcoagz/api-pydolarvenezuela'
+      },
     ],
   },
 })
